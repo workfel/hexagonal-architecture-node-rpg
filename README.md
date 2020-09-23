@@ -12,6 +12,8 @@ This is my first project using hexagonal architecture using NodeJS with Typescri
 - [ ] Do the "Iteration Three"
 
 ## Structure
+
+```
 src
 ├── corelogics
 │     ├── adapters
@@ -45,3 +47,4 @@ src
 │                     ├── receiveDamage.spec.ts
 │                     └── receiveDamage.ts
 └── index.ts
+```
