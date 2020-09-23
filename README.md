@@ -7,7 +7,7 @@ This is my first project using hexagonal architecture using NodeJS with Typescri
 
 ## TODO
 
-- [ ] Do the "Iteration One"
+- [x] Do the "Iteration One"
 - [ ] Do the "Iteration Two"
 - [ ] Do the "Iteration Three"
 
