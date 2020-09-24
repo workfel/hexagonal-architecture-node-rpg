@@ -52,7 +52,7 @@ describe('Receive Damage', () => {
   });
 
 
-  test('should damage to itself', async () => {
+  test('should not damage to itself', async () => {
     const { useCase, receiver } = setupUseCaseAndCreateCharacter(repository);
     const input: ReceiveDamageInput = {
       receiver: receiver,
@@ -63,6 +63,33 @@ describe('Receive Damage', () => {
     expect(success).toBe(false);
     expect(character.alive).toBe(true);
     expect(character.health).toBe(1000);
+  });
+
+  test('should reduced damage by 50%', async () => {
+    const { useCase, receiver, attacker } = setupUseCaseAndCreateCharacter(repository);
+    receiver.level = 6;
+    const input: ReceiveDamageInput = {
+      receiver: receiver,
+      damage: 100,
+      attacker
+    };
+    const { success, character } = await useCase.execute(input);
+    expect(success).toBe(true);
+    expect(character.alive).toBe(true);
+    expect(character.health).toBe(950);
+  });
+  test('should increase damage by 50%', async () => {
+    const { useCase, receiver, attacker } = setupUseCaseAndCreateCharacter(repository);
+    attacker.level = 6;
+    const input: ReceiveDamageInput = {
+      receiver: receiver,
+      damage: 100,
+      attacker
+    };
+    const { success, character } = await useCase.execute(input);
+    expect(success).toBe(true);
+    expect(character.alive).toBe(true);
+    expect(character.health).toBe(850);
   });
 
   function setupUseCaseAndCreateCharacter(repository: CharacterRepository) {
