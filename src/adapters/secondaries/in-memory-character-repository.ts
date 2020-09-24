@@ -1,5 +1,5 @@
-import { CharacterRepository } from '../../domains/characters/usecase/character-repository';
-import { Character } from '../../domains/characters/entity/character';
+import { CharacterRepository } from '../../corelogics/domains/characters/usecase/character-repository';
+import { Character } from '../../corelogics/domains/characters/entity/character';
 
 export class InMemoryCharacterRepository implements CharacterRepository {
   _characters: Character [] = [];

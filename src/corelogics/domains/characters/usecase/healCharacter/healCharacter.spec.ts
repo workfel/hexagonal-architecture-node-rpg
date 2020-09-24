@@ -1,8 +1,8 @@
 import { CharacterRepository } from '../character-repository';
-import { InMemoryCharacterRepository } from '../../../../adapters/secondaries/in-memory-character-repository';
 import { HealCharacter } from './healCharacter';
 import { HealCharacterInput } from './healCharacter.input';
 import { createCharacter } from '../../entity/character';
+import { InMemoryCharacterRepository } from '../../../../../adapters/secondaries/in-memory-character-repository';
 
 describe('Heal Character', () => {
 
@@ -15,7 +15,7 @@ describe('Heal Character', () => {
   test('should not heal dead character', async () => {
 
     const characterName = 'Hulk';
-    repository.create(createCharacter(characterName));
+    repository.create(createCharacter(characterName, 'ranged'));
     await repository.die(characterName);
     const useCase = new HealCharacter(repository);
     const input: HealCharacterInput = {
@@ -32,7 +32,7 @@ describe('Heal Character', () => {
 
     const characterName = 'Hulk';
     repository.create({
-      ...createCharacter(characterName),
+      ...createCharacter(characterName, 'ranged'),
       health: 500
     });
     const useCase = new HealCharacter(repository);
@@ -47,7 +47,7 @@ describe('Heal Character', () => {
   test('should not exceed 1000pv after healing ', async () => {
     const characterName = 'Hulk';
     repository.create({
-      ...createCharacter(characterName),
+      ...createCharacter(characterName, 'melee'),
       health: 990
     });
     const useCase = new HealCharacter(repository);

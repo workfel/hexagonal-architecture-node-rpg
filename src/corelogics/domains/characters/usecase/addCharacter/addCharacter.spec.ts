@@ -1,7 +1,7 @@
 import { AddCharacter } from './addCharacter';
 import { AddCharacterInput } from './addCharacter.input';
-import { InMemoryCharacterRepository } from '../../../../adapters/secondaries/in-memory-character-repository';
 import { CharacterRepository } from '../character-repository';
+import { InMemoryCharacterRepository } from '../../../../../adapters/secondaries/in-memory-character-repository';
 
 describe('Add Character', () => {
 
@@ -14,7 +14,8 @@ describe('Add Character', () => {
   test('should create character with init value', async () => {
     const addCharacter = new AddCharacter(repository);
     const input: AddCharacterInput = {
-      name: 'Hulk'
+      name: 'Hulk',
+      type: 'melee'
     };
 
     const { character } = await addCharacter.execute(input);
@@ -28,7 +29,8 @@ describe('Add Character', () => {
   test('shouldn\'t create character with name already chosen', async () => {
     const addCharacter = new AddCharacter(repository);
     const input: AddCharacterInput = {
-      name: 'Hulk'
+      name: 'Hulk',
+      type: 'melee'
     };
 
     const { character: character1 } = await addCharacter.execute(input);

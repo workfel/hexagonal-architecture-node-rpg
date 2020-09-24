@@ -1,8 +1,8 @@
 import { ReceiveDamage } from './receiveDamage';
 import { CharacterRepository } from '../character-repository';
-import { InMemoryCharacterRepository } from '../../../../adapters/secondaries/in-memory-character-repository';
 import { ReceiveDamageInput } from './receiveDamage.input';
-import { Character, createCharacter } from '../../entity/character';
+import { createCharacter } from '../../entity/character';
+import { InMemoryCharacterRepository } from '../../../../../adapters/secondaries/in-memory-character-repository';
 
 
 describe('Receive Damage', () => {
@@ -94,8 +94,8 @@ describe('Receive Damage', () => {
 
   function setupUseCaseAndCreateCharacter(repository: CharacterRepository) {
     const useCase = new ReceiveDamage(repository);
-    const newCharacter = createCharacter('Hulk');
-    const attacker = createCharacter('Thor');
+    const newCharacter = createCharacter('Hulk', 'ranged');
+    const attacker = createCharacter('Thor', 'ranged');
     repository.create(newCharacter);
     repository.create(attacker);
     return { useCase, receiver: newCharacter, attacker };

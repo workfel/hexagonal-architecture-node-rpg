@@ -10,7 +10,7 @@ export class AddCharacter implements UseCase {
   }
 
   async execute(input: AddCharacterInput): Promise<AddCharacterOutput> {
-    const create = createCharacter(input.name);
+    const create = createCharacter(input.name, input.type);
 
     const characterAlreadyExist = await this.repository.isExists(input.name);
     if (characterAlreadyExist) {
