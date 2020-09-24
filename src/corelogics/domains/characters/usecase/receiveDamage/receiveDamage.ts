@@ -8,12 +8,19 @@ export class ReceiveDamage implements UseCase {
 
   }
 
-  async execute({ damage, character }: ReceiveDamageInput): Promise<ReceiveDamageOutput> {
-    const newHealth = this.computeHealth(character.health, damage);
-    if (newHealth <= 0) {
-      await this.repository.die(character.name);
+  async execute({ damage, receiver, attacker }: ReceiveDamageInput): Promise<ReceiveDamageOutput> {
+    if (receiver.name === attacker.name) {
+      return {
+        success: false,
+        error: 'cannot_deal_damage_to_itself',
+        character: receiver
+      };
     }
-    const characterUpdated = await this.repository.updateHealth(character.name, newHealth);
+    const newHealth = this.computeHealth(receiver.health, damage);
+    if (newHealth <= 0) {
+      await this.repository.die(receiver.name);
+    }
+    const characterUpdated = await this.repository.updateHealth(receiver.name, newHealth);
     return {
       character: characterUpdated,
       success: true

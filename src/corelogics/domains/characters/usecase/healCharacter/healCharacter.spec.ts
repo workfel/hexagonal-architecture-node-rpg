@@ -45,7 +45,6 @@ describe('Heal Character', () => {
     expect(character.health).toBe(550);
   });
   test('should not exceed 1000pv after healing ', async () => {
-
     const characterName = 'Hulk';
     repository.create({
       ...createCharacter(characterName),
