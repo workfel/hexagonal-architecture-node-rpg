@@ -20,7 +20,7 @@ describe('Receive Damage', () => {
       attacker
     };
     const { character } = await useCase.execute(input);
-    expect(character.health).toBe(950);
+    expect(character.pv).toBe(950);
   });
   test('should character died if health becomes 0 ', async () => {
     const { useCase, receiver, attacker } = setupUseCaseAndCreateCharacter(repository);
@@ -37,7 +37,7 @@ describe('Receive Damage', () => {
     };
     const { character } = await useCase.execute(input2);
     expect(character.alive).toBe(false);
-    expect(character.health).toBe(0);
+    expect(character.pv).toBe(0);
   });
   test('should character health is 0 with more than 1000 damage', async () => {
     const { useCase, receiver, attacker } = setupUseCaseAndCreateCharacter(repository);
@@ -48,7 +48,7 @@ describe('Receive Damage', () => {
     };
     const { character } = await useCase.execute(input);
     expect(character.alive).toBe(false);
-    expect(character.health).toBe(0);
+    expect(character.pv).toBe(0);
   });
 
 
@@ -62,7 +62,7 @@ describe('Receive Damage', () => {
     const { success, character } = await useCase.execute(input);
     expect(success).toBe(false);
     expect(character.alive).toBe(true);
-    expect(character.health).toBe(1000);
+    expect(character.pv).toBe(1000);
   });
 
   test('should reduced damage by 50%', async () => {
@@ -76,7 +76,7 @@ describe('Receive Damage', () => {
     const { success, character } = await useCase.execute(input);
     expect(success).toBe(true);
     expect(character.alive).toBe(true);
-    expect(character.health).toBe(950);
+    expect(character.pv).toBe(950);
   });
   test('should increase damage by 50%', async () => {
     const { useCase, receiver, attacker } = setupUseCaseAndCreateCharacter(repository);
@@ -89,7 +89,7 @@ describe('Receive Damage', () => {
     const { success, character } = await useCase.execute(input);
     expect(success).toBe(true);
     expect(character.alive).toBe(true);
-    expect(character.health).toBe(850);
+    expect(character.pv).toBe(850);
   });
 
   function setupUseCaseAndCreateCharacter(repository: CharacterRepository) {

@@ -24,7 +24,7 @@ describe('Heal Character', () => {
     };
     const { character, success } = await useCase.execute(input);
     expect(success).toBe(false);
-    expect(character.health).toBe(0);
+    expect(character.pv).toBe(0);
     expect(character.alive).toBe(false);
   });
 
@@ -33,7 +33,7 @@ describe('Heal Character', () => {
     const characterName = 'Hulk';
     repository.create({
       ...createCharacter(characterName, 'ranged'),
-      health: 500
+      pv: 500
     });
     const useCase = new HealCharacter(repository);
     const input: HealCharacterInput = {
@@ -42,13 +42,13 @@ describe('Heal Character', () => {
     };
     const { character, success } = await useCase.execute(input);
     expect(success).toBe(true);
-    expect(character.health).toBe(550);
+    expect(character.pv).toBe(550);
   });
   test('should not exceed 1000pv after healing ', async () => {
     const characterName = 'Hulk';
     repository.create({
       ...createCharacter(characterName, 'melee'),
-      health: 990
+      pv: 990
     });
     const useCase = new HealCharacter(repository);
     const input: HealCharacterInput = {
@@ -57,6 +57,6 @@ describe('Heal Character', () => {
     };
     const { character, success } = await useCase.execute(input);
     expect(success).toBe(true);
-    expect(character.health).toBe(1000);
+    expect(character.pv).toBe(1000);
   });
 });

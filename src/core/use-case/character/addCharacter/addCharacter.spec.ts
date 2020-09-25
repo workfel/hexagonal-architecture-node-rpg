@@ -19,7 +19,7 @@ describe('Add Character', () => {
     };
 
     const { character } = await addCharacter.execute(input);
-    expect(character.health).toEqual(1000);
+    expect(character.pv).toEqual(1000);
     expect(character.level).toEqual(1);
     expect(character.alive).toBe(true);
     expect(character.name).toBe(input.name);

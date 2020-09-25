@@ -20,7 +20,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
   async updateHealth(name: string, newHealth: number): Promise<Character> {
     const character = await this.get(name);
     if (character) {
-      character.health = newHealth;
+      character.pv = newHealth;
     }
     this.update(character);
     return Promise.resolve(character);
@@ -29,7 +29,7 @@ export class InMemoryCharacterRepository implements CharacterRepository {
   async die(name: string): Promise<Character> {
     const character = await this.get(name);
     character.alive = false;
-    character.health = 0;
+    character.pv = 0;
     this.update(character);
     return character;
   }
