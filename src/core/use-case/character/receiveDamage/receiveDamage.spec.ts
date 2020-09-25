@@ -19,7 +19,8 @@ describe('Receive Damage', () => {
       damage: 50,
       attacker
     };
-    const { character } = await useCase.execute(input);
+    const { character, success } = await useCase.execute(input);
+    expect(success).toBe(true);
     expect(character.pv).toBe(950);
   });
   test('should character died if health becomes 0 ', async () => {

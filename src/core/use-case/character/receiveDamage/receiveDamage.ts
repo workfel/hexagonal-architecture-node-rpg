@@ -3,6 +3,8 @@ import { ReceiveDamageInput } from './receiveDamage.input';
 import { ReceiveDamageOutput } from './receiveDamage.output';
 import { CharacterRepository } from '../../../domain/character/character-repository';
 import { Character } from '../../../domain/character/entity/character';
+import { ReceiveDamageCalculator } from '../../../domain/character/entity/receive-damage-calculator';
+import { ReceiveDamageValidator } from '../../../domain/character/entity/receive-damage-validator';
 
 export class ReceiveDamage implements UseCase {
   constructor(private readonly repository: CharacterRepository) {
@@ -10,11 +12,11 @@ export class ReceiveDamage implements UseCase {
   }
 
   async execute({ damage, receiver, attacker }: ReceiveDamageInput): Promise<ReceiveDamageOutput> {
-    if (receiver.name === attacker.name) {
+    if (!ReceiveDamageValidator.validate(receiver, attacker)) {
       return this.cantDamageItself(receiver);
     }
 
-    const newHealth = this.computeHealth(receiver, attacker, damage);
+    const newHealth = ReceiveDamageCalculator.computeNewHealth(receiver, attacker, damage);
     if (newHealth <= 0) {
       await this.repository.die(receiver.name);
     }
@@ -32,19 +34,4 @@ export class ReceiveDamage implements UseCase {
       character: receiver
     };
   }
-
-  private computeHealth(receiver: Character, attacker: Character, damage: number) {
-    if (receiver.level >= attacker.level + 5) {
-      damage = damage * 0.5; // reduce by 50%
-    } else if (receiver.level <= attacker.level - 5) {
-      damage = damage + (damage * 0.5); // increase by 50%
-    }
-    let newHealth = receiver.pv - damage;
-    if (newHealth < 0) {
-      newHealth = 0;
-    }
-    return newHealth;
-  }
-
-
 }
