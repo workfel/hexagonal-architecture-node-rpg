@@ -1,1 +1,1 @@
-import './adapters/primaries/cli';
+import './core/adapters/primaries/cli';
